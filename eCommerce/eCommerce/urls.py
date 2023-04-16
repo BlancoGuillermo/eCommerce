@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static # traemos los archivos media
-from core.views import *
+
 
 urlpatterns = [
     path('', include('core.urls')),
