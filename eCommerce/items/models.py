@@ -18,7 +18,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True) # puede quedar en blanco
     price = models.FloatField()
-    image = models.ImageField(upload_to='item_images', blank=True, null=True)
+    image = models.ImageField(upload_to='item_images', blank=True, null=True) # blank y null debería ser False para impedir crear items sin imagen
     is_sold = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE) # si se borra usuario también sus publicaciones lo harán
     created_at = models.DateTimeField(auto_now_add=True)
