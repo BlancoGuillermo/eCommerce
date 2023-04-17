@@ -6,3 +6,4 @@ Integrantes:
  - BLANCO Guillermo.
  - GARCÍA Gabriel Alejandro.
  - CARNEIRO Iván Exequiel.
+ - RESCIA CASTRO Francisco Alejandro
