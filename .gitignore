@@ -14,6 +14,3 @@ ecom/
 \__pycache__
 /__pycache__
 .pyc
-eCommerce/items/migrations/__pycache__/0002_alter_category_options_item.cpython-311.pyc
-eCommerce/items/migrations/__pycache__/__init__.cpython-311.pyc
-eCommerce/items/migrations/__pycache__/0001_initial.cpython-311.pyc
