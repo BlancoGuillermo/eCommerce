@@ -1,13 +1,19 @@
-<<<<<<< HEAD
+
+<<<<<< HEAD
+>>>>>>> 79ec60890043a4cd8832fdfc248629de72aa2968
 env/
 env
 =======
->>>>>>> 79ec60890043a4cd8832fdfc248629de72aa2968
 venv/
 .venv/
 ENV/
 env.bak/
 venv.bak/
-/ecom
-/.vscode
-__pycache__/
+ecom/
+.vscode/
+\__pycache__
+/__pycache__
+.pyc
+eCommerce/items/migrations/__pycache__/0002_alter_category_options_item.cpython-311.pyc
+eCommerce/items/migrations/__pycache__/__init__.cpython-311.pyc
+eCommerce/items/migrations/__pycache__/0001_initial.cpython-311.pyc

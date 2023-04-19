@@ -4,13 +4,12 @@
 {% block title %}{{ item.name }}{% endblock %}
 
 {% block content %}
-
-<div class="grid grid-cols-5 gap-6">
+<div class="grid grid-cols-5 gap-6 max-h-full">
     <div class="col-span-3">
-        <img src="{{ item.image.url }}" class="rounded-xl" alt="">
+        <img src="{{ item.image.url }}" class="rounded-xl h-screen" alt="">
     </div>
 
-    <div class="col-span-2 p-6 bg-gray-200 rounded-xl">
+    <div class="col-span-2 p-6 bg-gray-200 rounded-xl h-screen">
         <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
         <p class="text-gray-500"><strong>Precio: </strong>{{ item.price }}</p>
         <p class="text-gray-500"><strong>Vendedor: </strong>{{ item.created_by.username }}</p>
@@ -34,21 +33,21 @@
 
         <!-- Iteramos sobre la base de datos-->
         {% for item in related_items %}
-
-            <div>
-                <a href="{% url 'item:detail' item.id %}">
-                    <div class="flex items-center justify-center bg-white">
-                        <img src="{{ item.image.url }} " class="rounded-t-xl"> <!-- Trae las imágenes -->
-                    </div>
-                    
-                    <!-- Trae el nombre y el precio-->
-                    <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="text-2xl">{{ item.name }}</h2>
-                        <p class="text-gray-500">Price: {{ item.price }}</p>
-                    </div>
-                </a>
-            </div>
-
+            {% if not item.is_sold %}
+                <div>
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div class="flex items-center justify-center bg-white">
+                            <img src="{{ item.image.url }} " class="rounded-t-xl"> <!-- Trae las imágenes -->
+                        </div>
+                        
+                        <!-- Trae el nombre y el precio-->
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ item.name }}</h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
