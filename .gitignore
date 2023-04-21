@@ -1,16 +1,12 @@
-
-<<<<<< HEAD
->>>>>>> 79ec60890043a4cd8832fdfc248629de72aa2968
-env/
 env
-=======
-venv/
+env
+venv
 .venv/
-ENV/
+ENV
 env.bak/
 venv.bak/
-ecom/
-.vscode/
-\__pycache__
-/__pycache__
+ecom
+ecom-lx
+.vscode
+__pycache__
 .pyc

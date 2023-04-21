@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-5 gap-6 max-h-full">
+    <div class="col-span-3">
+        <img src="{{ item.image.url }}" class="rounded-xl h-screen" alt="">
+    </div>
+
+    <div class="col-span-2 p-6 bg-gray-200 rounded-xl h-screen">
+        <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
+        <p class="text-gray-500"><strong>Precio: </strong>{{ item.price }}</p>
+        <p class="text-gray-500"><strong>Vendedor: </strong>{{ item.created_by.username }}</p>
+        
+        {% if item.description %}
+            <p class="text-gray-700">
+                <strong class="text-gray-500">Descripción:</strong><br>
+                {{ item.description }}
+            </p>
+        {% endif %}
+
+        <a href="#" class="inline-block mt-6 px-6 py-3 text-lg front-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contactar al vendedor</a>
+    </div>
+</div>
+
+<!-- Muestra items de la misma categoria -->
+<div class="mt-6 px-6 py-12 bg-gray-200 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Artículos Relacionados</h2>
+    
+    <div class="grid grid-cols-3 gap-3">
+
+        <!-- Iteramos sobre la base de datos-->
+        {% for item in related_items %}
+            {% if not item.is_sold %}
+                <div>
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div class="flex items-center justify-center bg-white">
+                            <img src="{{ item.image.url }} " class="rounded-t-xl"> <!-- Trae las imágenes -->
+                        </div>
+                        
+                        <!-- Trae el nombre y el precio-->
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ item.name }}</h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
