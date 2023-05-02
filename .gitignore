@@ -1,12 +1,8 @@
-env
-env
-venv
+venv/
 .venv/
-ENV
+ENV/
 env.bak/
 venv.bak/
-ecom
-ecom-lx
-.vscode
-__pycache__
-.pyc
+/ecom
+/.vscode
+__pycache__/

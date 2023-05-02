@@ -1,9 +1,14 @@
 # Web eCommerce
 ## PROYECTO INTEGRADOR GRUPO 11 CAC_DJANGO_2023
 
-Integrantes:
+Integranrtes:
 
- - BLANCO Guillermo.
+ - BLACO Guillermo.
  - GARCÍA Gabriel Alejandro.
  - CARNEIRO Iván Exequiel.
- - RESCIA CASTRO Francisco Alejandro
+
+
+ ### Consignas
+ #### Enfoque de templates en APP_DIRS
+ - Herencia entre base.html y demás templates.
+ - Se empleó un filtro Django Template
