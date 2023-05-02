@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from items.models import *
-# Create your views here.
+from datetime import datetime
 
 def index(request):
-    # items = Item.objects.filter(is_sold=False)[0:6] # solo si no estan vendidos
-    items = Item.objects.all()
+    # filtra los items "NO_VENDIDOS", ordena por fecha de creación donde ultimo >>> primero, mostrando solo 4 elementos
+    items = Item.objects.filter(is_sold=False).order_by("-created_at")[:4]
+
     categories = Category.objects.all()
 
     return render(request, 'core/index.html', {

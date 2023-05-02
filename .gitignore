@@ -1,8 +1,9 @@
-venv/
+
+env
+venv
 .venv/
-ENV/
-env.bak/
-venv.bak/
-/ecom
-/.vscode
-__pycache__/
+ENV
+env.bak
+venv.bak
+.vscode
+__pycache__
