@@ -24,41 +24,7 @@
                 </a>
             </div>
 
-            <!-- search input form -->
-            <div class="col-6">
-                <div class="input-group">
-                    <input class="form-control border-end-0 border" type="search" placeholder="search" id="example-search-input">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-secondary bg-white border-start-0 border ms-n5" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- navbar -->
-        <div class="row container-fluid align-items-center justify-content-between py-1 px-2">
-            <!-- navbar menu -->
-            <nav class="col navbar justify-content-evenly">
-                <div class="nav-item dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="color: gray;">
-                        Categorias
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    {% for category in categories%}
-                        <li class="list-unstyled p-1">
-                            <a href="#">{{ category.name }}</a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <a href="#" style="text-decoration: none; color: gray;">Historial</a>
-                <a href="{% url 'items:publicar' %}" style="text-decoration: none; color: gray;">Vender</a>
-                <a href="#" style="text-decoration: none; color: gray;">Ayuda</a>
-            </nav>
-            <!-- navbar user -->
-            <nav class="col navbar justify-content-evenly">
+            <nav class="col-5 navbar justify-content-evenly">
                 <a href="#" style="text-decoration: none; color: black;">Registrate</a>
                 <!-- Button trigger modal login -->
                 <button type="submit" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#login" style="text-decoration: none; color: black;">
@@ -81,8 +47,6 @@
                     </div>
                     </div>
                 </div>
-
-
                 {% comment %}                  
                     <div class="nav-item p-1">
                         <a href="#" style="text-decoration: none;">
@@ -108,6 +72,7 @@
                 </a>
             </nav>
         </div>
+
     </header>
 
     <main>

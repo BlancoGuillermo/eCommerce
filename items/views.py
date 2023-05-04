@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Item
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import *
+from .models import *
+
 
 # Create your views here.
 
@@ -15,3 +17,20 @@ def detail(request, pk):
         'related_items': related_items,
         }
     )
+
+
+def publicar(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+            images = request.FILES.getlist('images')
+            for image in images:
+                item_image = Image.objects.create(image=image)
+                item.images.add(item_image)
+            return redirect('item_detail', pk=item.pk)
+    else:
+        form = ItemForm()
+    return render(request, 'items/publicar.html', {'item_form': form})
