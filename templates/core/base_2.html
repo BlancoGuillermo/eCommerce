@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | eCommerce</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+    <script src="https://kit.fontawesome.com/02bc901fa9.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="{% static 'core/css/card.css'%}">  -->
+    {% block css %}{% endblock css %}
+</head>
+<body>
+    <header class="container-fluid border-bottom bg-light">
+        <div class="row px-2 py-1 d-flex align-items-center justify-content-between">
+            <div class="col-3">
+                <a href="{% url 'core:index' %}" style="text-decoration: none; color: black;">
+                    <img src="{% static 'core/img/ecom.png' %}" alt="eCommerce icon" style="width: 50px;">
+                    eCommerce
+                </a>
+            </div>
+
+            <nav class="col-5 navbar justify-content-evenly">
+                <a href="#" style="text-decoration: none; color: black;">Registrate</a>
+                <!-- Button trigger modal login -->
+                <button type="submit" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#login" style="text-decoration: none; color: black;">
+                    Ingresá
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ingreá con tu cuenta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Form login
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Ingresar</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {% comment %}                  
+                    <div class="nav-item p-1">
+                        <a href="#" style="text-decoration: none;">
+                            <img src="{% static "core/img/avatar-profile.png" %}" alt="avatar icon" class="rounded-circle" style="width: 35px;">
+                            <span>Usuario Pepe</span>
+                        </a>
+                    </div>
+                {% endcomment %}
+                <a href="#" style="text-decoration: none; color: black;">Mis compras</a>
+                {% comment %}
+                <div class="nav-item dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+                        Favoritos
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for category in categories%}
+                    {% endfor %}
+                    </ul>
+                </div> -->
+                {% endcomment %}
+                <a href="#" style="text-decoration: none; color: black;">
+                    <i class="fa-solid fa-cart-shopping" style="color: #000000;"></i>
+                </a>
+            </nav>
+        </div>
+
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "core/footer.html" %}
+</body>
+</html>

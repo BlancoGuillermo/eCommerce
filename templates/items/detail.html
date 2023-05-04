@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        {% comment %}
+        <img src="{% url 'item.image.url' %}" alt="">
+        {% endcomment %}
+    </div>
+
+    <div>
+        <h1>{{ item.name }}</h1>
+        <p><strong>Precio: </strong>{{ item.price }}</p>
+        <p><strong>Vendedor: </strong>{{ item.created_by.username }}</p>
+        
+        {% if item.description %}
+            <p>
+                <strong>Descripción:</strong><br>
+                {{ item.description }}
+            </p>
+        {% endif %}
+
+        <a href="#">Contactar al vendedor</a>
+    </div>
+</div>
+
+<!-- Muestra items de la misma categoria -->
+<div>
+    <h2>Artículos Relacionados</h2>
+
+    <div>
+        <!-- Iteramos sobre la base de datos-->
+        {% for item in related_items %}
+            {% if not item.is_sold %}
+                <div>
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div class="flex items-center justify-center bg-white">
+                            <img src="{{ item.image.url }} " class="rounded-t-xl"> Trae las imágenes
+                        </div>
+                        
+                        <!-- Trae el nombre y el precio-->
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ item.name }}</h2>
+                            <p class="text-gray-500">${{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
