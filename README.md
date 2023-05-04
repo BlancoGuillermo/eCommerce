@@ -7,3 +7,4 @@ Integrantes:
  - GARCÍA Gabriel Alejandro.
  - CARNEIRO Iván Exequiel.
  - RESCIA CASTRO Francisco Alejandro
+ - GARCETE, Erica Elizabeth
