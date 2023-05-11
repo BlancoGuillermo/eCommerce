@@ -3,7 +3,7 @@
 django-admin startproject projectname
 
 # Ejecutar el servidor de desarrollo en un puerto específico
-python3 manage.py runserver <port number>
+python manage.py runserver <port number>
 
 # Aplicar migraciones a la base de datos
 python3 manage.py migrate
