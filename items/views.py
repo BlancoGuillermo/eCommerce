@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from .models import *
+import os
+from datetime import datetime
 
 
 # Create your views here.
@@ -28,7 +30,13 @@ def publicar(request):
             item.save()
             images = request.FILES.getlist('images')
             for image in images:
+                # Obtener la extensión del archivo
+                _, ext = os.path.splitext(image.name)
+                # Generar el nuevo nombre de la imagen
+                new_name = f"{item.pk}_{datetime.now().strftime('%Y%m%d%H%M%S')}{ext}"
+                # Guardar la imagen en el directorio correspondiente
                 item_image = Image.objects.create(image=image)
+                item_image.image.save(new_name, image, save=True)
                 item.images.add(item_image)
             return redirect('item_detail', pk=item.pk)
     else:

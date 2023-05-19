@@ -8,7 +8,7 @@
             <div class="col-4 my-2 border rounded shadow-sm">
                 <form id="contact-form" name="item-form" action="" method="POST">
                     {% csrf_token %}
-                    {{ item_form.as_table }}
+                    {{ item_form.as_div }}
                     
                     <div class="text-center m-2">
                         <button type="reset" class="btn btn-danger mx-2">Borrar datos</button>
