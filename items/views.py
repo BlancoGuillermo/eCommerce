@@ -1,44 +1,30 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import *
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 from .models import *
-import os
-from datetime import datetime
+from .forms import *
 
-
-# Create your views here.
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    # Si un item pertenece a la misma categoria y no está vendido lo muestra en el template
-    # related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:3]
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:5]
 
+    # Artículos relacionados
+    related_items = Item.objects.filter(
+        category=item.category, sold=False).exclude(pk=pk)[0:5]
 
     return render(request, 'items/detail.html', {
         'item': item,
         'related_items': related_items,
-        }
+    }
     )
 
 
-def publicar(request):
-    if request.method == 'POST':
-        form = ItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.created_by = request.user
-            item.save()
-            images = request.FILES.getlist('images')
-            for image in images:
-                # Obtener la extensión del archivo
-                _, ext = os.path.splitext(image.name)
-                # Generar el nuevo nombre de la imagen
-                new_name = f"{item.pk}_{datetime.now().strftime('%Y%m%d%H%M%S')}{ext}"
-                # Guardar la imagen en el directorio correspondiente
-                item_image = Image.objects.create(image=image)
-                item_image.image.save(new_name, image, save=True)
-                item.images.add(item_image)
-            return redirect('item_detail', pk=item.pk)
-    else:
-        form = ItemForm()
-    return render(request, 'items/publicar.html', {'item_form': form})
+class ItemCreateView(CreateView):
+    form_class = ItemCreateForm
+    template_name = 'item_create.html'
+    success_url = reverse_lazy('detail')  # URL a la que redireccionar después de la creación exitosa
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user  # Establece el usuario creador como el usuario actual
+        return super().form_valid(form)
+

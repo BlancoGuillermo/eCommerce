@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
+from .views import *
 
 app_name = 'items'
 
 urlpatterns = [
     path('<int:pk>/', views.detail, name='detail'),
-    path('publicar/', views.publicar, name='publicar'),
+    path('item_create/', ItemCreateView.as_view(), name="item_create"),
 
+    # # deberia renderizar una lista de los items creados por el usuario para que edite o elimine
+    # path('editar/', ItemUpdateView.as_view(), name="item-update"),
 ]

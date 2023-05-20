@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponseNotAllowed
 from items.models import *
 from datetime import datetime
 from .forms import ContactoForm
@@ -8,15 +8,16 @@ from .forms import ContactoForm
 
 def index(request):
     # filtra los items "NO_VENDIDOS", ordena por fecha de creación donde ultimo >>> primero, mostrando solo 4 elementos
-    items = Item.objects.filter(is_sold=False).order_by("-created_at")[:4]
+    items = Item.objects.filter(sold=False).order_by("-created_at")[:4]
 
     categories = Category.objects.all()
 
-    return render( request, 'core/index.html', {
+    return render(request, 'core/index.html', {
         'categories': categories,
-        'items' : items,
-        }
+        'items': items,
+    }
     )
+
 
 def contact(request):
     if request.method == "POST":
@@ -26,12 +27,13 @@ def contact(request):
             messages.success(request, mensaje)
             contact_form = ContactoForm()
         else:
-            messages.error(request, 'Los datos cargados tienen errores, revísalos')
+            messages.error(
+                request, 'Los datos cargados tienen errores, revísalos')
     elif request.method == "GET":
         contact_form = ContactoForm()
     else:
         HttpResponseNotAllowed(f"Método {request.method} no soportado.")
-    
+
     context = {
         "contact_form": contact_form
     }

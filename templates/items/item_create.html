@@ -1,0 +1,13 @@
+{% extends 'core/base_2.html'%}
+
+{% block title %}Publicar{% endblock %}    
+
+{% block content %}
+    <div class="container m-4">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Crear Item</button>
+        </form>
+    </div>
+{% endblock %}
