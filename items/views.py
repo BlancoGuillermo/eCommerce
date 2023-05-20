@@ -21,8 +21,8 @@ def detail(request, pk):
 
 class ItemCreateView(CreateView):
     form_class = ItemCreateForm
-    template_name = 'item_create.html'
-    success_url = reverse_lazy('detail')  # URL a la que redireccionar después de la creación exitosa
+    template_name = 'items/publicar.html'
+    success_url = reverse_lazy('items:detail')  # URL a la que redireccionar después de la creación exitosa
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user  # Establece el usuario creador como el usuario actual

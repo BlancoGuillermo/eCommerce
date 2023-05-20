@@ -6,8 +6,8 @@ app_name = 'items'
 
 urlpatterns = [
     path('<int:pk>/', views.detail, name='detail'),
-    path('item_create/', ItemCreateView.as_view(), name="item_create"),
+    path('publicar/', ItemCreateView.as_view(), name="publicar"),
 
     # # deberia renderizar una lista de los items creados por el usuario para que edite o elimine
-    # path('editar/', ItemUpdateView.as_view(), name="item-update"),
+    # path('editar/', ItemUpdateView.as_view(), name="item_update"),
 ]
