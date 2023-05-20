@@ -19,9 +19,9 @@ class Category(models.Model):
 
 
 def image_upload_custom(instance, filename):
-    item_directory = f'item_{instance.pk}'
+    item_directory = f'item_{instance.id}'
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-    filename = f'{instance.pk}_{timestamp}{os.path.splitext(filename)[1]}'
+    filename = f'{instance.id}_{timestamp}{os.path.splitext(filename)[1]}'
     return os.path.join('item_images', item_directory, filename)
 
 
@@ -39,4 +39,4 @@ class Item(models.Model):
     images = models.ImageField(upload_to=image_upload_custom, verbose_name="Imagenes", null=True, blank=False)
 
     def __str__(self):
-        return self.name
+        return self.title

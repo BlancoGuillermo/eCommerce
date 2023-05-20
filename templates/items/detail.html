@@ -34,7 +34,7 @@
     <div>
         <!-- Iteramos sobre la base de datos-->
         {% for item in related_items %}
-            {% if not item.is_sold %}
+            {% if not item.sold %}
                 <div>
                     <a href="{% url 'item:detail' item.id %}">
                         <div class="flex items-center justify-center bg-white">
