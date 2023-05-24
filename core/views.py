@@ -7,13 +7,11 @@ from .forms import ContactoForm
 
 
 def index(request):
-    # filtra los items "NO_VENDIDOS", ordena por fecha de creación donde ultimo >>> primero, mostrando solo 4 elementos
-    items = Item.objects.filter(sold=False).order_by("-created_at")[:4]
+    # filtra los items "NO_VENDIDOS", ordena por fecha de creación donde ultimo >>> primero, mostrando solo 5 items (productos)
+    items = Item.objects.filter(sold=False).order_by("-created_at")[:5]
 
-    categories = Category.objects.all()
 
     return render(request, 'core/index.html', {
-        'categories': categories,
         'items': items,
     }
     )

@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container m-4">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="form-control p-2">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Crear Item</button>

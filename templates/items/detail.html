@@ -36,9 +36,9 @@
         {% for item in related_items %}
             {% if not item.sold %}
                 <div>
-                    <a href="{% url 'item:detail' item.id %}">
+                    <a href="{% url 'items:detail' item.id %}">
                         <div class="flex items-center justify-center bg-white">
-                            <img src="{{ item.image.url }} " class="rounded-t-xl"> Trae las imágenes
+                            <img src="{{ items.image.url }} " class="rounded-t-xl"> Trae las imágenes
                         </div>
                         
                         <!-- Trae el nombre y el precio-->
