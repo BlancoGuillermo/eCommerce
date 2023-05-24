@@ -169,3 +169,21 @@ path("signup/", views.SignUp.as_view(), name="signup"),
 {% block content %}
 <p>Welcome!</p>
 {% endblock %}
+
+# Para usar URLs:
+<a href="{% url 'path_name' %}">Sample link</a>
+
+#Variables con filtro
+{{ username|upper }}
+{{ dictionary_name | dictsort:"key_name"}}
+filtros: https://docs.djangoproject.com/en/4.2/ref/templates/builtins/
+
+#Modelos y tipos:
+class Flower(models.Model):
+  petal_color = models.CharField()
+  petal_number = models.IntegerField()
+  # More attributes… 
+https://docs.djangoproject.com/en/4.2/ref/models/fields/#model-field-types
+
+#Relaciones
+https://docs.djangoproject.com/en/4.2/topics/db/examples/
