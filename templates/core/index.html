@@ -10,7 +10,7 @@
             {% for item in items %}
                 <div class="card col mx-4 shadow rounded">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <img src="{{ items.image.url }}" class="img-fluid" style="width: 200px;"/>
+                        <!-- <img src="{{ items.image.url }}" class="img-fluid" style="width: 200px;"/> -->
                         <a href="{% url 'items:detail' item.id %}" class="card-link stretched-link"></a>
                     </div>
                     {% comment %}
