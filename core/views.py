@@ -1,4 +1,5 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from django.contrib import messages
 from django.http import HttpResponseNotAllowed
 from items.models import *
@@ -37,3 +38,20 @@ def contact(request):
     }
 
     return render(request, 'core/contact.html', context)
+=======
+from items.models import *
+# Create your views here.
+
+def index(request):
+    
+    items = Item.objects.filter(is_sold=False) # solo si no estan vendidos
+    categories = Category.objects.all()
+
+    return render(request, 'core/index.html', {
+        'categories': categories,
+        'items' : items,
+    })
+
+def contact(request):
+    return render(request, 'core/contact.html')
+>>>>>>> main
