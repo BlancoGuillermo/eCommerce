@@ -14,7 +14,7 @@ def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
     # Artículos relacionados
-    related_items = Item.objects.filter(category=item.category, sold=False).exclude(id=item.id)[0:1]
+    related_items = Item.objects.filter(category=item.category, parent=item.category.parent, sold=False).exclude(id=item.id)[0:1]
 
     return render(request, 'items/detail.html', {
         'item': item,
@@ -31,6 +31,11 @@ class ItemCreateView(CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.save()
+
+        images = self.request.FILES.getlist('images')
+        for image in images:
+            Item.objects.create(image = image)
+            
 
         return super().form_valid(form)
 
