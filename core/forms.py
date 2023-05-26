@@ -16,7 +16,7 @@ def custom_validate_email(value):
         raise ValidationError('Correo electrónico inválido')
 
 
-class ContactoForm(forms.Form):
+class ContactForm(forms.Form):
     nombre = forms.CharField(
         label='Nombre',
         max_length=50,

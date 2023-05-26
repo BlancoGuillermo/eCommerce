@@ -29,7 +29,11 @@ class ItemCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        form.instance.save()            
+        form.instance.save()           
+
+        # item = self.request.parse_file_upload()
+        # images = self.request.FILES.getlist('images')
+        # for image in images:
 
         return super().form_valid(form)
 
