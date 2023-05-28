@@ -4,13 +4,13 @@
 
 {% block content %}
     <!-- Contenedor de los productos disponibles -->
-    <div class="container justify-content-center my-4 p-2">
+    <div class="container-fluid justify-content-centerp-2 bg-secondary">
         <div class="row container justify-content-center p-2">
-            {% comment %} Iteramos sobre Items {% endcomment %}
+        {% if object_list %}
             {% for item in object_list %}
                 <div class="card col mx-4 shadow rounded">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <!-- <img src="{{ items.image.url }}" class="img-fluid" style="width: 200px;"/> -->
+                        <img src="{{ item.images.url }}" class="img-fluid" style="width: 200px;"/>
                         <a href="{% url 'items:detail' item.id %}" class="card-link stretched-link"></a>
                     </div>
                     {% comment %}<div class="card-header" style="font-size: smaller;">{{ item.created_at|date:"d-m-Y" }}</div>{% endcomment %}
@@ -22,6 +22,10 @@
                     <p class="card-footer">Publicado por: <b>{{item.created_by}}</b></p>
                 </div>
             {% endfor %}
+        {% else %}
+            <h4>No hay artículos publicados.</h4>
+        {% endif %}
+        
         </div>
     </div>
 {% endblock %}

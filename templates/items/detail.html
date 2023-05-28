@@ -4,31 +4,13 @@
 {% block title %}{{ item.title }}{% endblock %}
 
 {% block content %}
-<div>
-    <div>
-        {% comment %}
-        <img src="{% url 'item.image.url' %}" alt="">
-        {% endcomment %}
-    </div>
-
-    <div>
-        <h1>{{ item.title }}</h1>
-        <p><strong>Precio: </strong>{{ item.price }}</p>
-        <p><strong>Vendedor: </strong>{{ item.created_by.username }}</p>
-        
-        {% if item.description %}
-            <p>
-                <strong>Descripción:</strong><br>
-                {{ item.description }}
-            </p>
-        {% endif %}
-
-        <a href="#">Contactar al vendedor</a>
+<div class="container-fluid m-5">
+    <div class="col">
     </div>
 </div>
 
-<div>
-    <h2>Artículos Relacionados</h2>
+<div class="container-fluid mt-4">
+    <h4>Artículos Relacionados</h4>
 
     <div>
         {% for item in related_items %}
