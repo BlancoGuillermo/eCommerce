@@ -36,7 +36,6 @@ class ItemCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('items:detail', kwargs={'pk': self.object.pk})
-
 class DetailView(DetailView):
     model = Item
     template_name = 'items/detail.html'
