@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from typing import Any, Optional
+from django.contrib.admin import register
+from django.db import models
+from django.db.models.fields import related
 from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 
-import os
-from django.conf import settings
-from time import strftime
 
 # def detail(request, pk):
 #     item = get_object_or_404(Item, pk=pk)
@@ -37,7 +37,15 @@ class ItemCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('items:detail', kwargs={'pk': self.object.pk})
 
-
 class DetailView(DetailView):
     model = Item
     template_name = 'items/detail.html'
+    context_object_name = "item"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        item = Item.objects.get(pk=self.kwargs["pk"])
+        context["related_items"] = Item.objects.filter(category=item.category, sold=False).exclude(pk=item.pk)[:5]
+
+        return context
+    

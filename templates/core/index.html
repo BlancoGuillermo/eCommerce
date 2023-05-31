@@ -8,7 +8,7 @@
         <div class="row container justify-content-center p-2">
         {% if object_list %}
             {% for item in object_list %}
-                <div class="card col mx-4 shadow rounded">
+                <div class="card col mx-4 shadow rounded" style="max-width: 300px;">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                         <img src="{{ item.images.url }}" class="img-fluid" style="width: 200px;"/>
                         <a href="{% url 'items:detail' item.id %}" class="card-link stretched-link"></a>
@@ -17,7 +17,7 @@
                     <div class="card-header" style="font-size: smaller;">{{ item.category }}</div>
                     <div class="card-body">
                         <h4 class="card-text"><span>${{ item.price }}</span></h4>
-                        <div class="card-title">{{ item.title }}</div>
+                        <div class="card-title text-truncate">{{ item.title }}</div>
                     </div>
                     <p class="card-footer">Publicado por: <b>{{item.created_by}}</b></p>
                 </div>
