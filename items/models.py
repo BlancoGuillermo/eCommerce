@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Item(models.Model):
     category = models.ForeignKey(Category, verbose_name="Categoria", related_name='items', on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False)
+    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False, null=True)
     brand = models.CharField(max_length=50, verbose_name="Marca", blank=True)
     model = models.CharField(max_length=50, verbose_name="Modelo", blank=True)
     description = models.TextField(verbose_name="Descripcion", blank=False, null=True)
