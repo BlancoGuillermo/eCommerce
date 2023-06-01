@@ -1,47 +1,31 @@
 {% extends 'core/base.html'%}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Bienvenidos{% endblock %}
 
 {% block content %}
     <!-- Contenedor de los productos disponibles -->
-    <div class="container justify-content-center my-4 p-2">
-        <div class="row container justify-content-center p-4">
-            {% comment %} Iteramos sobre Items {% endcomment %}
-            {% for item in items %}
-                <div class="card col mx-4 shadow rounded">
+    <div class="container-fluid justify-content-centerp-2 bg-secondary">
+        <div class="row container justify-content-center p-2">
+        {% if object_list %}
+            {% for item in object_list %}
+                <div class="card col mx-4 shadow rounded" style="max-width: 300px;">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <img src="{{ items.image.url }}" class="img-fluid" style="width: 200px;"/>
+                        <img src="{{ item.images.url }}" class="img-fluid" style="width: 200px;"/>
                         <a href="{% url 'items:detail' item.id %}" class="card-link stretched-link"></a>
                     </div>
-                    {% comment %}
-                        <div class="card-header" style="font-size: smaller;">{{ item.created_at|date:"d-m-Y" }}</div>
-                    {% endcomment %}
+                    {% comment %}<div class="card-header" style="font-size: smaller;">{{ item.created_at|date:"d-m-Y" }}</div>{% endcomment %}
+                    <div class="card-header" style="font-size: smaller;">{{ item.category }}</div>
                     <div class="card-body">
-                        <div class="card-text"><span>${{ item.price }}</span></div>
-                        <div class="card-title display-none">
-                            <b>{{ item.name }}</b>
-                        </div>
+                        <h4 class="card-text"><span>${{ item.price }}</span></h4>
+                        <div class="card-title text-truncate">{{ item.title }}</div>
                     </div>
-                    <h2 class="card-footer"></h2>
+                    <p class="card-footer">Publicado por: <b>{{item.created_by}}</b></p>
                 </div>
             {% endfor %}
+        {% else %}
+            <h4>No hay artículos publicados.</h4>
+        {% endif %}
+        
         </div>
     </div>
-
-    <!-- Contenedor de las categorias-->
-    <div class="container-fluid text-center my-4">
-        <h4>Categorías</h4>
-        <div class="row justify-content-between align-items-center">
-            {% for category in categories%}
-            <div class="col border rounded my-2 mx-2 bg-light shadow">
-                <a href="#">
-                    <div class="">
-                        <h2>{{ category.name }}</h2>
-                        <p>{{ category.items.count }} items</p> <!-- Devuelve la cantidad de items por categoria -->
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>    
 {% endblock %}

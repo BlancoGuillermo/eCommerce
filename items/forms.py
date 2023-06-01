@@ -1,12 +1,13 @@
 from django import forms
-from .models import Item
+from .models import *
+
 
 class ItemForm(forms.ModelForm):
-    images = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-
     class Meta:
-        model = Item
-        fields = ['category', 'name', 'description', 'price', 'images']
-        widgets = {
-            'description': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
-        }
+            model = Item
+            fields = ['category', 'brand', 'model', 'title', 'description', 'condition', 'price', 'images']
+            widgets = {
+                'title': forms.TextInput(attrs={'size':80}),
+                'description': forms.Textarea(attrs={'cols':80}),
+                'images': forms.ClearableFileInput(attrs={'multiple': True}),
+            }

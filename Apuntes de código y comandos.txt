@@ -1,0 +1,171 @@
+﻿# Comandos
+# Crear un nuevo proyecto Django
+django-admin startproject projectname
+
+# Ejecutar el servidor de desarrollo en un puerto específico
+python manage.py runserver <port number>
+
+# Aplicar migraciones a la base de datos
+python3 manage.py migrate
+
+# Crear una nueva aplicación dentro del proyecto
+python3 manage.py startapp myapp
+
+# Shell de Python
+python3 manage.py shell
+
+# Definir una vista básica que devuelve una respuesta HTTP
+def index(request):
+  # Devolver la respuesta HTTP con el mensaje especificado
+  return HttpResponse("This is the response!")
+
+# Definir una vista que carga un template y lo devuelve como respuesta HTTP
+from django.template import loader
+def home():
+  # Cargar el template desde el archivo "app/home.html"
+  template = loader.get_template("app/home.html")
+  # Renderizar y devolver el template como respuesta HTTP
+  return HttpResponse(template.render())
+
+# Definir una vista que carga un template y lo renderiza con un contexto
+from django.http import HttpResponse
+from django.template import loader
+def home(request):
+  # Definir el contexto con una variable "name" y un valor "Junior"
+  context = {"name": "Junior"}
+  # Cargar el template desde el archivo "app/home.html"
+  template = loader.get_template("app/home.html")
+  # Renderizar y devolver el template con el contexto como respuesta HTTP
+  return HttpResponse(template.render(context))
+
+# Forma rápida de definir una vista que carga un template y lo renderiza con un contexto
+from django.shortcuts import render
+def home(request):
+  # Definir el contexto con una variable "name" y un valor "Junior"
+  context = {"name": "Junior"}
+  # Renderizar y devolver el template "app/home.html" con el contexto como respuesta HTTP
+  return render(request, "app/home.html", context)
+
+# Etiqueta en un template para mostrar el valor de la variable "name"
+<h1>Hello, {{name}}</h1>
+
+# Definir un enrutamiento clásico en Django
+from django.urls import path
+from . import views
+urlpatterns = [
+  # Ruta para la URL raíz, asociada con la vista 'home'
+  path('', views.home),
+  # Ruta para la URL 'profile/', asociada con la vista 'profile' y con el nombre "profile"
+  path('profile/', views.profile, name="profile")
+]
+
+# Incluir el archivo urls.py de una aplicación en el enrutamiento principal
+from django.contrib import admin
+from django.urls import include, path
+urlpatterns = [
+  # Ruta para el sitio de administración de Django
+  path("admin/", admin.site.urls),
+  # Incluir las rutas de la aplicación "myapp" en el enrutamiento principal
+  path("", include("myapp.urls")),
+
+# Crear Superusuario
+python3 manage.py createsuperuser
+
+# Para Administrar tablas usando el panel de admin
+-En admin.py
+-Registramos los modelos
+from .models import Book
+admin.site.register(Book)
+
+# Crear Usuario
+user = User.objects.create_user(username="myusername", email="myemail@crazymail.com", password="mypassword")
+user.save()
+
+# Login de usuario
+# En views.py es una vista
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
+def login_view(request):
+  context = {
+    "login_view": "active"
+  }
+  if request.method == "POST": #Accede si se esta enviando el form, sino carga la página.
+    username = request.POST["username"]
+    password = request.POST["password"]
+    # Add your code below:
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+      return redirect("home")
+    else:
+      return HttpResponse("invalid credentials")
+  return render(request, "registration/login.html", context) #Si solo se esta accediendo
+
+# Para pedir loguin para acceder a las vistas
+# views.py
+from django.contrib.auth.mixins import LoginRequiredMixin
+# views.py
+class SomeView(LoginRequiredMixin, ListView):
+  model = ModelExample
+
+# Para bloquear las vistas solo para usuarios registrados, usar decorador
+# views.py
+from django.contrib.auth.decorators import login_required
+@login_required
+def profile(request):
+  return render(request, "app/profile.html", name="profile")
+
+Tanto el mixin de inicio de sesión como el decorador hacen aproximadamente lo mismo. La principal diferencia radica en la sintaxis y la implementación: 
+los mixins se utilizan para clases, mientras que los decoradores se utilizan para funciones.
+
+# Para hacer el logout, definimos una vista y la url.
+# views.py
+ def logout_view(request):
+  # ... Other logic
+  logout(request)
+  return redirect("home")
+# urls.py
+urlpatterns = [
+  path("/logout", logout, name="logout")
+]
+
+# Página de loguin
+<!-- registration/login.html -->
+ 
+{% block title %}Login{% endblock %}
+ 
+{% block content %}
+  <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_p }}
+        <tr>
+          <td>&nbsp;</td>
+          <td><input type="submit" value="Submit"></td>
+        </tr>                
+      </table>
+    </form>
+{% endblock %}
+
+# Página de registro
+# views.py
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+ 
+class SignUp(CreateView):
+  form_class = UserCreationForm
+  success_url = reverse_lazy("login")
+  template_name = "registration/signup.html"
+# urls.py
+path("signup/", views.SignUp.as_view(), name="signup"),
+
+# Para extender un template, queda algo como:
+{% extends 'vetoffice/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'vetoffice/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<p>Welcome!</p>
+{% endblock %}

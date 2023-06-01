@@ -8,3 +8,6 @@ venv.bak
 .vscode
 __pycache__
 /docker
+Pipfile
+*.lock
+*.jpg
