@@ -17,16 +17,18 @@ class Category(models.Model):
 
 class Item(models.Model):
     category = models.ForeignKey(Category, verbose_name="Categoria", related_name='items', on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False, null=True)
-    brand = models.CharField(max_length=50, verbose_name="Marca", blank=True)
-    model = models.CharField(max_length=50, verbose_name="Modelo", blank=True)
-    description = models.TextField(verbose_name="Descripcion", blank=False, null=True)
+    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False, null=True,) # help_text="Indicá producto, marca, modelo y características principales"
+    brand = models.CharField(max_length=50, verbose_name="Marca", blank=True, help_text="opcional")
+    model = models.CharField(max_length=50, verbose_name="Modelo", blank=True, help_text="opcional")
+    description = models.TextField(verbose_name="Descripcion corta", blank=False, null=True, max_length=500,) # help_text="Describe una lista de caracaterísticas principales"
+    detail = models.TextField(verbose_name="Detalles", blank=True, null=True, max_length=3000,) # help_text="Datalla cada característica pricipal para los compradores"
     price = models.DecimalField(verbose_name="Precio", max_digits=10, decimal_places=2)
-    images = models.ImageField(verbose_name="Imagenes", upload_to="items_img", blank=False, null=True)
     condition = models.BooleanField(default='nuevo', verbose_name="Condicion", choices=((True , "nuevo"), (False, "usado")))
     sold = models.BooleanField(default=False)    
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField("Stock", default=1, blank=False, null=False)
+    images = models.ImageField("Imagenes", upload_to="images_item", blank=False, null=True)
     
     def __str__(self):
         return self.title

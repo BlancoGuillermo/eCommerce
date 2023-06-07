@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'items/css/card_rel_items.css'%}">
+{% endblock css %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+{% block content %}
+    <div class="row border rounded shadow-lg m-5 p-3">
+    <!-- Imagen principal y galería vertical -->
+        <div class="col-5">
+            <img src="{{ item.images.url }}" class="img-fluid" style="width: 400px;"/>
+        </div>
+        <!-- categoria, título, descripción -->
+        <div class="col-4 border-start pb-3">
+            <h4>{{item.title}}</h4>
+            <h4 class="pt-3">$ {{item.price}}</h4>
+            <div class="pt-3">
+                <span><b>Descripción</b></span>
+                <div>{{item.description|linebreaksbr}}</div>
+            </div>
+        </div>
+        <!-- condición, vendedor, contacto , precio , btn-comprar-->
+        <div class="col-3 border-start">
+            <span>Categoría: <b>{{ item.category }}</b></span>
+            <!-- condición -->
+            <div class="pb-3">
+                {% if item.condition %}
+                <span>Artículo: <b>nuevo</b></span>
+                {% else  %}
+                <span>Artículo: <b>usado</b></span>
+                {% endif %}
+            </div>
+            <div class="pb-3">
+                <div class="pb-3">Vendedor: <b>{{item.created_by}}</b></div>
+                <div>
+                    <span>Contacto:</span><br>
+                    <div>
+                        <a href="https://wa.me/+54911" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: black;">
+                            <i class="fa-brands fa-whatsapp" style="color: #25d37a;"></i><b> +5490303456</b>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="mailto:pepito.verdulero@narnia.yo" style="font-size: .8rem; text-decoration: none; color: black;">
+                            Envir email: <b><span>pepito.verdulero@narnia.yo</span></b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid">
+                {% if item.quantity > 1 %}
+                    <p>Stock: {{ item.quantity }} unidades</p>
+                {% else %}
+                    <p>Stock: {{ item.quantity }} unidad</p>
+                {% endif %}
+                
+                <button type="button" class="btn btn-success btn-block">COMPRAR</button>
+            </div>
+        </div>
+
+        {% comment %}Detalles{% endcomment %}
+        <div class="row border-top py-3">
+            <h5>Detalles del Producto</h5>
+            <p>{{ item.detail|linebreaksbr}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="mx-5 my-3">
+            <h4>Productos Relacionados</h4>
+        </div>
+        <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap pt-5 pb-5">
+        {% for item in related_items %}
+            <div class="card d-flex align-items-center justify-content-center position-relative">
+                <div class='imgContainer'>
+                    <img src="{{ item.images.url }}"  class="img-fluid">
+                    <h4>${{ item.price }}</h4>
+                    <p>{{ item.category }}</p>
+                </div>
+                <div class="card-body">
+                    <p>{{ item.title }}</p>
+                </div>
+                <a href="{% url 'items:detail' item.id %}" class="card-link stretched-link"></a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'core/base_2.html'%}
+
+{% block title %}Publicar item{% endblock %}    
+
+{% block content %}
+    <div class="container m-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+        <form method="post" enctype="multipart/form-data" class="form-group p-2">
+            {% csrf_token %}
+            <div class="form-control">
+            {% for field in form %}
+                <span class="control-label">{{ field.label }}</span>
+                <p>{{ field }}</p>               
+            {% endfor %}
+                <button type="submit" class="btn btn-success p-3 m-3">Publicar Producto</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
