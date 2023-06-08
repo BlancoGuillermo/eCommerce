@@ -2,7 +2,9 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from items.models import *
 from .forms import *
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, FormView
+
 
 
 # def contact(request):
@@ -44,3 +46,17 @@ class ContactView(FormView):
         messages.success(self.request, "¡Consulta enviada correctamente!\nNos comunicaremos a la brevedad")
         
         return super().form_valid(form)
+
+def signup(request):
+
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login')
+        else:
+            form = SignupForm()
+
+    return render(request, 'core/signup.html',{'form':form })
