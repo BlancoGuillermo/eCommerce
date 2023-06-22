@@ -5,10 +5,10 @@ from django.conf.urls.static import static # traemos los archivos media
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('core.urls')),
     path('items/', include('items.urls')),
-    path('admin/', admin.site.urls),
-   
 ]
 
 if settings.DEBUG:

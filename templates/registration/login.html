@@ -1,0 +1,41 @@
+{% extends "core/base_2.html" %}
+
+{% block content %}
+
+<div class="m-5 p-2">
+    <div class="alert-danger" role="alert">
+        {% if form.errors %}
+        <p>Usuario o contraseña incorrecto. Inténtalo de nuevo.</p>
+        {% endif %}
+    
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p>Tu cuenta no tiene acceso a esta página. Para continuar, inicie sesión con una cuenta que tenga acceso.</p>
+        {% else %}
+        <p>Por favor, ingresa con tu usuario para ver esta página.</p>
+        {% endif %}
+        {% endif %}
+    </div>
+    <form class="form-control" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div>
+            <p class="form-label">{{ form.username.label_tag }}</p>
+            <p class="form-input">{{ form.username }}</p>
+        </div>
+        <div>
+            <p class="form-label">{{ form.password.label_tag }}</p>
+            <p class="form-input">{{ form.password }}</p>
+        </div>
+
+        <div>
+            <input class="btn btn-success" type="submit" value="login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Resetear contraseña?</a></p>
+
+</div>
+{% endblock %}

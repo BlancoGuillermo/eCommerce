@@ -1,5 +1,40 @@
 {% extends 'core/base.html' %}
 
-{% block title %} Mis publicaciones {% endblock %}
+{% block title %} Mis Publicaciones {% endblock %}
 
-{% block content %}{% endblock content %}
+{% block content %}
+<div class="mx-2 my-4">
+    <h3>Producto publicados por: {{user|title}}</h3>
+</div>
+<div class="container">
+    <table class="table table-hover table-bordered mx-1 my-5">
+        <thead>
+            <tr class="text-center table-success">
+                <th scope="col">TÍTULO</th>
+                <th scope="col">CATEGORÍA</th>
+                <th scope="col">STOCK</th>
+                <th scope="col">PRECIO</th>
+                <th scope="col">EDITAR / ELIMINAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_list %}
+        <tr>
+            <td><a href={{ item.get_absolute_url }} style="text-decoration: none;">{{ item.title }}</a></td>
+            <td class="text-center">{{ item.category }}</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-end">$ {{ item.price }}</td>
+            <td class="text-center">
+                <a href="{% url 'items:editar' item.pk %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fa-regular fa-pen-to-square" style="color: #005eff;"></i>
+                </a>
+                <button class="btn btn-sm btn-outline-danger">
+                    <i class="fa-regular fa-trash-can" style="color: #ff0000;"></i>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

@@ -12,6 +12,7 @@
     {% bootstrap_javascript %}
     {% bootstrap_messages %}
     <script src="https://kit.fontawesome.com/02bc901fa9.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
     {% block css %}{% endblock css %}
 </head>
 
@@ -27,15 +28,20 @@
 
             <!-- search input form -->
             <div class="col-6">
-                <div class="input-group">
-                    <input class="form-control border-end-0 border" type="search" placeholder="search"
-                        id="example-search-input">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-secondary bg-white border-start-0 border ms-n5" type="button">
+                <form action="{% url 'core:index' %}" method="get">
+                    {% csrf_token %}
+                    <div class="d-flex flex-colum input-group">
+                        {% for field in form %}
+                            {{ field }}
+                        {% endfor %}
+                        <button type="reset" class="input-group-append btn btn-outline bg-white border border-0" style="color: red;">
+                            <span>X</span>
+                        </button>
+                        <button class="input-group-append btn btn-outline-secondary bg-white border-start-1 border ms-n5" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                    </span>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -44,80 +50,72 @@
             <!-- navbar menu -->
             <nav class="col navbar justify-content-evenly">
                 <div class="nav-item dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="color: gray;">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="color: #ffe600;">
                         Categorias
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="background-color: rgb(80, 165, 0);">
                         {% for category in categories%}
                         <li class="list-unstyled p-1">
-                            <a href="#" style="text-decoration: none;">{{ category.name }}</a>
+                            <a href="#" class="text-dark" style="text-decoration: none;">{{ category.name }}</a>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
-                <a href="#" style="text-decoration: none; color: gray;">Historial</a>
-                
-                <a href="#" style="text-decoration: none; color: gray;">Ayuda</a>
+                <a href="#" style="text-decoration: none; color: #ffe600;">Historial</a>
+                <a href="#" style="text-decoration: none; color: #ffe600;">Ayuda</a>
+                <a href="{% url 'items:publicar' %}" style="text-decoration: none; color: #ffe600;">Vender</a>
             </nav>
+
             <!-- navbar user -->
             <nav class="col navbar justify-content-evenly">
                 {% if user.is_authenticated %}
-
-                <a href="#">User</a>
-                <a href="#" style="text-decoration: none; color: black;">Mis compras</a>
-
+                <!-- user_detail -->
                 <div class="nav-item dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{% static 'core/img/avatar-profile.png' %}" alt="avatar icon"
+                            class="rounded-circle p-1" style="width: 35px;">
+                        <span>{{ user|title }}</span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuUser" style="background-color: rgb(80, 165, 0);">
+                        <li class="list-unstyled p-1">
+                            <a href="#" style="text-decoration: none; color: black;">Mis compras</a>
+                        </li>
+                        <li class="list-unstyled p-1">
+                            <a href="{% url 'logout' %}" style="text-decoration: none; color: #000000;">
+                                Logout
+                                <i class="fa-solid fa-arrow-right-from-bracket" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Favoritos -->
+                <div class="nav-item dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownFavorite" data-bs-toggle="dropdown"
                         aria-expanded="false" style="color: black;">
                         Favoritos
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        {% for category in categories%}
-                        {% endfor %}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownFavorite" style="background-color: rgb(80, 165, 0);">
+                        <li class="list-unstyled p-1">
+                            <a href="#" style="text-decoration: none; color: black;">Favorito1</a>
+                        </li>
+                        <li class="list-unstyled p-1">
+                            <a href="#" style="text-decoration: none; color: black;">Favorito1</a>
+                        </li>
+                        <li class="list-unstyled p-1">
+                            <a href="#" style="text-decoration: none; color: black;">Favorito1</a>
+                        </li>
                     </ul>
                 </div>
-                <a href="{% url 'items:publicar' %}" style="text-decoration: none; color: gray;">Vender</a>
+
+                <!-- Publicaciones del usuario -->
+                <a href="{% url 'items:mis_publicaciones' %}" style="text-decoration: none; color: #000000;">Mis Publicaciones</a>
 
                 <a href="#" style="text-decoration: none; color: black;">
                     <i class="fa-solid fa-cart-shopping" style="color: #000000;"></i>
                 </a>
-
                 {% else %}
-                <a href="{% url 'core:signup' %}" style="text-decoration: none; color: black;">Registrate</a>
-                <!-- Button trigger modal login -->
-                <button type="submit" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#login"
-                    style="text-decoration: none; color: black;">
-                    Ingresá
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <a href="{% url 'core:login' %}"<h5 class="modal-title" id="exampleModalLabel">Ingreá con tu cuenta</h5></a>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Form login
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Ingresar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% comment %} user nav {% endcomment %}
-                <div class="nav-item p-1">
-                    <a href="#" style="text-decoration: none; color: black;">
-                        <img src="{% static 'core/img/avatar-profile.png' %}" alt="avatar icon" class="rounded-circle"
-                            style="width: 35px;">
-                        <span>User</span>
-                    </a>
-                </div>
-
-                
+                <a href="{% url 'login' %}" class="btn btn-danger">Ingresar</a>
+                {% endif %}
             </nav>
         </div>
     </header>
@@ -125,8 +123,16 @@
 
     {% block content %}{% endblock %}
 
-
     {% include "core/footer.html" %}
+
+    <script type="text/javascript">
+        var $ = jQuery.noConflict();
+        function open_login(url){
+            $('#login').load(url, function (){
+                $(this).modal('show');
+            });
+        }
+    </script>
 </body>
 
 </html>

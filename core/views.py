@@ -1,39 +1,32 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib import messages
 from items.models import *
 from .forms import *
-from django.shortcuts import render, redirect
 from django.views.generic import ListView, FormView
 
-
-
-# def contact(request):
-#     if request.method == "POST":
-#         contact_form = ContactoForm(request.POST)
-#         mensaje = "Recibimos tu consulta. Gracias por escribirnos."
-#         if contact_form.is_valid():
-#             messages.success(request, mensaje)
-#             contact_form = ContactoForm()
-#         else:
-#             messages.error(
-#                 request, 'Los datos cargados tienen errores, revísalos')
-#     elif request.method == "GET":
-#         contact_form = ContactoForm()
-#     else:
-#         HttpResponseNotAllowed(f"Método {request.method} no soportado.")
-
-#     context = {
-#         "contact_form": contact_form
-#     }
-
-#     return render(request, 'core/contact.html', context)
 
 class IndexLV(ListView):
     model = Item
     template_name = 'core/index.html'
+    extra_context = {'form': SearchForm()}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+    
     def get_queryset(self):
-        return Item.objects.filter(sold=False).order_by("-created_at")[:5]
+        query = self.request.GET.get('q')
+        if query:
+            item_list = Item.objects.filter(Q(sold=False) &
+                                            Q(title__icontains=query)|
+                                            Q(brand__icontains=query)|
+                                            Q(model__icontains=query))
+        else:
+            item_list = Item.objects.filter(Q(sold=False)).order_by("-created_at")
+
+        return item_list
 
 
 class ContactView(FormView):
@@ -46,17 +39,3 @@ class ContactView(FormView):
         messages.success(self.request, "¡Consulta enviada correctamente!\nNos comunicaremos a la brevedad")
         
         return super().form_valid(form)
-
-def signup(request):
-
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-            return redirect('/login')
-        else:
-            form = SignupForm()
-
-    return render(request, 'core/signup.html',{'form':form })

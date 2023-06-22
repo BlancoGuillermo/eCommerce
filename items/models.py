@@ -17,11 +17,11 @@ class Category(models.Model):
 
 class Item(models.Model):
     category = models.ForeignKey(Category, verbose_name="Categoria", related_name='items', on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False, null=True,) # help_text="Indicá producto, marca, modelo y características principales"
+    title = models.CharField(max_length=100, verbose_name="Titulo", blank=False, null=True,)
     brand = models.CharField(max_length=50, verbose_name="Marca", blank=True, help_text="opcional")
     model = models.CharField(max_length=50, verbose_name="Modelo", blank=True, help_text="opcional")
-    description = models.TextField(verbose_name="Descripcion corta", blank=False, null=True, max_length=500,) # help_text="Describe una lista de caracaterísticas principales"
-    detail = models.TextField(verbose_name="Detalles", blank=True, null=True, max_length=3000,) # help_text="Datalla cada característica pricipal para los compradores"
+    description = models.TextField(verbose_name="Descripcion corta", blank=False, null=True, max_length=500,)
+    detail = models.TextField(verbose_name="Detalles", blank=True, null=True, max_length=3000,)
     price = models.DecimalField(verbose_name="Precio", max_digits=10, decimal_places=2)
     condition = models.BooleanField(default='nuevo', verbose_name="Condicion", choices=((True , "nuevo"), (False, "usado")))
     sold = models.BooleanField(default=False)    

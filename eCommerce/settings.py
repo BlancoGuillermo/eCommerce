@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'bootstrap5',
     'core',
     'items',
@@ -62,9 +63,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'eCommerce.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# Postgressql
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -75,6 +74,18 @@ DATABASES = {
         'PORT': config('DATABASE_PORT')
     }
 }
+
+# Sqlite3
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'sqlite3.db',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
@@ -95,11 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL  = '/'
-
-
 LANGUAGE_CODE = 'es-ar'
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
 USE_I18N = True
@@ -118,3 +124,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LOGIN
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL  = '/'

@@ -13,9 +13,3 @@ class ItemForm(forms.ModelForm):
                 'detail': forms.Textarea(attrs={'cols':100}),
                 'images': forms.ClearableFileInput(attrs={'multiple': True}),
             }
-    
-    def validar_stock(self):
-        quantity = self.cleaned_data['quantity']
-        if quantity <= 0:
-            raise forms.ValidationError('El stock debe ser mayor a cero')
-        return quantity

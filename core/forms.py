@@ -22,20 +22,27 @@ class SignupForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
     
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Your username',
+        'placeholder': 'nombre de usuario',
     }))
 
     email = forms.CharField(widget=forms.EmailInput(attrs={
-        'placeholder': 'Your email adress',
+        'placeholder': 'pepito@correo.com',
     }))
 
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Your password',
+        'placeholder': 'ingresá tu password',
     }))
 
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Repeat password',
     }))
+
+    def save(self, commit=True):
+        user = super(SignupForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
 
 
 
@@ -100,3 +107,18 @@ class ContactForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         asunto = cleaned_data.get("asunto")
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField(
+        label='Busqueda',
+        required=False,
+        min_length=3,
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ingrese el nombre del producto o palabras claves'
+            }
+        )
+    )
